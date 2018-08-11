@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="__STATIC__/admin/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="__STATIC__/admin/node_modules/hdjs/css/bootstrap.min.css"/>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="__STATIC__/admin/node_modules/hdjs/js/jquery.min.js"></script>
+    <script src="__STATIC__/admin/node_modules/hdjs/js/bootstrap.min.js"></script>
+    <title>后台管理</title>
+    <script>
+        //HDJS组件需要的配置
+       var hdjs = {
+            'base': '__STATIC__/admin/node_modules/hdjs',
+            'uploader': "{:url('system/component/uploader')}",
+            //获取文件列表的后台地址
+            'filesLists': " {:url('system/component/filesLists')}?",
+        };
+    </script>
+    <script src="__STATIC__/admin/node_modules/hdjs/app/util.js"></script>
+    <script src="__STATIC__/admin/node_modules/hdjs/require.js"></script>
+    <script src="__STATIC__/admin/node_modules/hdjs/config.js"></script>
+
+</head>
+<body>
+<div>
+    <!--头部导航-->
+    <nav class="navbar-inverse" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">返回首页</a>
+            <a class="navbar-brand" href="{:url('admin/entry/index')}">后台首页</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                       <i class="fa fa-w fa-user"></i>
+                        {:session('admin.admin_username')}
+                        <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{:url('admin/login/logout')}">退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </nav>
+    <!--头部导航结束-->
+    <!--主体内容-->
+    <div class="container-fluid admin-menu" style="margin-top: 10px;">
+        <div class="row">
+            <!--左侧菜单-->
+            <div class="col-xs-12 col-sm-3 col-lg-2 left-menu">
+
+                <div class="panel panel-default">
+                    <!--栏目管理-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">栏目管理</h3>
+                    </div>
+                    <ul class="list-group menus">
+                        <li class="list-group-item">
+                            <a href="{:url('admin/category/index')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-certificate"></i>
+                                栏目列表
+                            </a>
+                        </li>
+                    </ul>
+                    <!--栏目结束-->
+                    <!--标签管理-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">标签管理</h3>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{:url('admin/tag/index')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-tag"></i>
+                                标签列表
+                            </a>
+                        </li>
+                    </ul>
+                    <!--标签管理结束-->
+                    <!--文章管理-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">文章管理</h3>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{:url('admin/article/index')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-book"></i>
+                                文章列表
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{:url('admin/article/recycle')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-recycle"></i>
+                                回收站
+                            </a>
+                        </li>
+                    </ul>
+                    <!--文章管理结束-->
+                    <!--友联管理-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">友链管理</h3>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{:url('admin/link/index')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-link"></i>
+                                友联列表
+                            </a>
+                        </li>
+                    </ul>
+                    <!--友联管理结束-->
+                    <!--站点管理-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">站点管理</h3>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{:url('admin/websit/index')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-wrench"></i>
+                                网站配置
+                            </a>
+                        </li>
+                    </ul>
+                    <!--站点管理结束-->
+                    <!--权限管理-->
+                    <div class="panel-heading">
+                        <h3 class="panel-title">权限管理</h3>
+                    </div>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{:url('admin/admin/index')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-user"></i>
+                                用户管理
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{:url('admin/rule/index')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-tachometer"></i>
+                                规则管理
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{:url('admin/group/index')}" class="quickMenuLink">
+                                <i class="fa fa-w fa-users"></i>
+                                用户组管理
+                            </a>
+                        </li>
+                    </ul>
+                    <!--权限管理结束-->
+                </div>
+            </div>
+
+
+            <style>
+                .list-group-item{
+                    cursor: pointer;
+                }
+                .quickMenuLink{
+                    color: black;
+                    text-decoration: none;
+
+                }
+                .quickMenuLink:hover{
+                    text-decoration: none;
+                    color: black;
+                }
+                .quickMenuLink i{
+                    color: #337ab7;
+                }
+            </style>
+            <!--左侧菜单结束-->
+            <!--右侧内容-->
+            <div class="col-xs-12 col-sm-9 col-lg-10">
+                {block name='content'}{/block}
+            </div>
+            <!--右侧内容结束-->
+        </div>
+    </div>
+    <!--主体内容-->
+</div>
+</body>
+</html>

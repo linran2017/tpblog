@@ -1,0 +1,81 @@
+{extend name='base'/}
+{block name='content'}
+<style>
+    .nav-tabs li.active a{
+        border: 1px solid #428bca !important;
+        background-color: #428bca !important;
+        color: #ffffff;
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户组管理</h3>
+    </div>
+    <div class="panel-body">
+        <!-- TAB NAVIGATION -->
+        <ul class="nav nav-tabs">
+            <li><a href="{:url('index')}">列表</a></li>
+            <li class="active"><a href="{:url('store')}">新增</a></li>
+        </ul>
+        <form action="" method="post" class="form-horizontal" role="form">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">用户组管理</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="inputID" class="col-sm-2 control-label">用户组名称:</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="title" id="inputID" class="form-control" value="" title="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        分配权限
+                        <input type="checkbox" class="all">全选
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {foreach name='rules' key='key' item='v'}
+                    <div class="panel panel-default father-all">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {$key}
+                                <input type="checkbox" class="son-all">全选
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                                <div class="checkbox">
+                                    {foreach name='v' item='vo'}
+                                    <label>
+                                        <input type="checkbox" name="rules[]" value="{$vo['id']}">{$vo['title']}
+                                    </label>
+                                    {/foreach}
+                                </div>
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $('.all').click(function () {
+       $(this).parents('.panel-heading').siblings('.panel-body').find('input[type=checkbox]')
+           .prop('checked',$(this).prop('checked'))
+    })
+    $('.son-all').click(function () {
+        $(this).parents('.father-all').find('input[type=checkbox]')
+            .prop('checked',$(this).prop('checked'))
+    })
+</script>
+{/block}

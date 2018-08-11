@@ -1,0 +1,44 @@
+{extend name='base'/}
+{block name='content'}
+<style>
+    .nav-tabs li.active a{
+        border: 1px solid #428bca !important;
+        background-color: #428bca !important;
+        color: #ffffff;
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">用户组管理</h3>
+    </div>
+    <div class="panel-body">
+        <!-- TAB NAVIGATION -->
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="javascript:;">权限详情</a></li>
+        </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        【{$oldData['title']}】用户组权限
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    {foreach name='rulesData' key='key' item='v'}
+                    <div class="panel panel-default father-all">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {$key}
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                                    {foreach name='v' item='vo'}
+                                    <span style="display: block; float:left; margin-left: 5px; margin-right: 5px;">{$vo['title']}</span>
+                                    {/foreach}
+                        </div>
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+    </div>
+</div>
+{/block}

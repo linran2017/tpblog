@@ -1,0 +1,52 @@
+{extend name='base'/}
+{block name='content'}
+<style>
+    .nav-tabs li.active a{
+        border: 1px solid #428bca !important;
+        background-color: #428bca !important;
+        color: #ffffff;
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">后台用户管理</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{:url('index')}">列表</a></li>
+            <li><a href="{:url('store')}">新增</a></li>
+        </ul>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>用户名</th>
+                <th>所属用户组</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name='data' item='v'}
+            <tr>
+                <td>{$v['id']}</td>
+                <td>{$v['admin_username']}</td>
+                <td>{$v['group']}</td>
+                <td>
+                    <a href="{:url('admin/admin/edit',['id'=>$v['id']])}" class="btn btn-primary">编辑</a>
+                    <a href="{:url('admin/admin/setauth',['id'=>$v['id']])}" class="btn btn-info">分配权限</a>
+                    <a href="javascript:;" onclick="del({$v['id']})" class="btn btn-danger">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function del(id) {
+            util.confirm('确定删除吗?', function () {
+                location.href="{:url('del')}"+'?id='+id;
+            })
+        }
+    </script>
+</div>
+{/block}

@@ -1,0 +1,121 @@
+{extend name='base'/}
+{block name='content'}
+<!-- TAB NAVIGATION -->
+<style>
+    .nav-tabs li.active a{
+        border: 1px solid #428bca !important;
+        background-color: #428bca !important;
+        color: #ffffff;
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">文章管理</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a>编辑</a></li>
+        </ul>
+        <form action="" method="post" class="form-horizontal" style="margin-top: 10px;" role="form">
+            <div class="form-group">
+                <label for="inputID" class="col-sm-2 control-label">文章标题:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="title" id="inputID" class="form-control" value="{$articleData['title']}" title="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputID" class="col-sm-2 control-label">文章作者:</label>
+                <div class="col-sm-10">
+                    <input type="text" name="author" id="inputID" class="form-control" value="{$articleData['author']}" title="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputID" class="col-sm-2 control-label">文章排序:</label>
+                <div class="col-sm-10">
+                    <input type="number" name="sort" id="inputID" class="form-control" value="{$articleData['sort']}" title="">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputID" class="col-sm-2 control-label">所属栏目:</label>
+                <div class="col-sm-10">
+                    <select name="category_id" class="form-control">
+                        <option value="0">--请选择所属分类--</option>
+                        {foreach name='categoryData' item='v'}
+                        <option {if condition="$v['id']==$articleData['category_id']"}selected{/if} value="{$v['id']}">{$v['_name']}</option>
+                        {/foreach}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputID" class="col-sm-2 control-label">文章标签:</label>
+                <div class="col-sm-10">
+                    {foreach name='tagData' item='v'}
+                    <div class="checkbox-inline">
+                        <input {if condition="in_array($v['id'],$tagId)"}checked{/if} name="tag_id[]" value="{$v['id']}" type="checkbox" >{$v['name']}
+                    </div>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputID" class="col-sm-2 control-label">预览图:</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="preview" readonly="" value="{$articleData['preview']}">
+                        <div class="input-group-btn">
+                            <button onclick="upImage(this)" class="btn btn-default" type="button">选择图片</button>
+                        </div>
+                    </div>
+                    <div class="input-group" style="margin-top:5px;">
+                        <img src="{$articleData['preview']}" class="img-responsive img-thumbnail" width="150">
+                        <em class="close" style="position:absolute; top: 0px; right: -14px;" title="删除这张图片" onclick="removeImg(this)">×</em>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputID" class="col-sm-2 control-label">文章摘要:</label>
+                <div class="col-sm-10">
+                    <textarea name="abstract" class="form-control">{$articleData['abstract']}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputID" class="col-sm-2 control-label">文章内容:</label>
+                <div class="col-sm-10">
+                    <textarea id="container" name="content" style="height:300px;width:100%;">{$articleData['content']}</textarea>
+                    <script>n
+                        util.ueditor('container', {hash: 2, data: 'hd'}, function (editor) {
+                            //console.log(3)
+                        });
+                    </script>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="{:input('param.id')}" />
+            <div class="form-group">
+                <div class="col-sm-10 col-sm-offset-2">
+                    <button type="submit" class="btn btn-primary">更新</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    //上传图片
+    function upImage(obj) {
+        require(['util'], function (util) {
+            options = {
+                multiple: false,//是否允许多图上传
+            };
+            util.image(function (images) {
+                //alert(images);//上传成功的图片，数组类型
+                $("[name='preview']").val(images[0]);
+                $(".img-thumbnail").attr('src', images[0]);
+            }, options)
+        });
+    }
+    //移除图片
+    function removeImg(obj) {
+        $(obj).prev('img').attr('src', 'resource/images/nopic.jpg');
+        $(obj).parent().prev().find('input').val('');
+    }
+</script>
+{/block}

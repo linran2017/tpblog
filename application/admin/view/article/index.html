@@ -1,0 +1,72 @@
+{extend name='base'/}
+{block name='content'}
+<!-- TAB NAVIGATION -->
+<style>
+    .nav-tabs li.active a{
+        border: 1px solid #428bca !important;
+        background-color: #428bca !important;
+        color: #ffffff;
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">文章管理</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{:url('index')}">列表</a></li>
+            <li><a href="{:url('store')}">新增</a></li>
+        </ul>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>文章标题</th>
+                <th>文章作者</th>
+                <th>所属栏目</th>
+                <th>文章排序</th>
+                <th>发布时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name='data' item='v'}
+            <tr>
+            <td>{$v['id']}</td>
+            <td>{$v['title']}</td>
+            <td>{$v['author']}</td>
+            <td>{$v['name']}</td>
+            <td><input type="number" class="form-control" value="{$v['sort']}" onblur="change(this,{$v['id']})" /></td>
+            <td>{:date('y-m-d',$v['sendtime'])}</td>
+            <td>
+              <a href="{:url('edit',['id'=>$v['id']])}" class="btn btn-primary">编辑</a>
+              <a href="javascript:;" onclick="del({$v['id']})" class="btn btn-danger">删除</a>
+            </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        {$data->render()}
+        <script>
+            //编辑排序
+            function change(obj,id) {
+                var sort=$(obj).val();
+                $.post("{:url('changeSort')}",{id:id,sort:sort},function (res) {
+                    //console.log(res);
+                    if(res.code){
+                        util.message(res.msg,'refresh','success');
+                    }else {
+                        util.message(res.msg,'','error');
+                    }
+                })
+            }
+            //删除文章放入回收站
+            function del(id) {
+                util.confirm('确定要放入回收站吗?', function () {
+                    location.href="{:url('toRecyce')}"+'?id='+id;
+                })
+            }
+        </script>
+    </div>
+</div>
+{/block}

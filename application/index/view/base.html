@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>{$headConf['title']}</title>
+    <!--描述和摘要-->
+    <meta name="Description" content=""/>
+    <meta name="Keywords" content=""/>
+    <!--载入公共模板-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/home/bs/bootstrap.min.css" />
+    <script src="__STATIC__/home/js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__STATIC__/home/bs/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/home/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/home/css/backTop.css"/>
+    <script src="__STATIC__/home/js/jquery.min.js"></script>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>{$_websit['title']}</h1>
+            </div>
+        </div>
+    </div>
+</header>
+<nav role="navigation" class="navbar navbar-default">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12" >
+
+                <div class="navbar-header">
+
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example-navbar-collapse">
+
+                        <span class="sr-only">切换导航</span>
+
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+
+                <div class="collapse navbar-collapse" id="example-navbar-collapse">
+                    <ul class="_menu" >
+                        <li {if condition="!input('param.')"}class="_active"{/if}><a href="/">首页</a></li>
+                        {foreach name='_cateData' item='v'}
+                        <li {if condition="input('param.cate_id')==$v['id']"}class="_active"{/if}><a href="{:url('index/lists/index',['cate_id'=>$v['id']])}">{$v['name']}</a></li>
+                        {/foreach}
+                    </ul>
+                   </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<section>
+    <div class="container">
+        <div class="row">
+            <!--标签规定文档的主要内容main-->
+            {block name='content'}{/block}
+            <aside class="col-md-4 hidden-sm hidden-xs">
+                <div class="_widget">
+                    <h4>网站登录</h4>
+                    <div class="_info">
+                       {if condition="session('name')"}
+                        <a>{$name}</a>
+                        <a href="{:url('index/login/logout')}">退出</a>
+                        {else /}
+                        <a href="{:url('index/login/login')}" class="login">登录</a>
+                        <a href="{:url('index/reg/reg')}">注册</a>
+                        {/if}
+                    </div>
+                </div>
+                <div class="_widget">
+                    <h4>分类列表</h4>
+                    <div>
+                        {foreach name='_category' item='v'}
+                        <a href="{:url('index/lists/index',['cate_id'=>$v['id']])}">{$v['name']}</a>
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="_widget">
+                    <h4>标签云</h4>
+                    <div class="_tag">
+                        {foreach name='_tag' item='v'}
+                        <a href="{:url('index/lists/index',['tag_id'=>$v['id']])}">{$v['name']}</a>
+                        {/foreach}
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</section>
+<footer class="hidden-xs">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <h4 class="_title">最新文章</h4>
+                {foreach name='_newArc' item='v'}
+                <div id="" class="_single">
+                    <p><a href="{:url('index/content/index',['arc_id'=>$v['id']])}">{$v['title']}</a></p>
+                    <time>{:date('20y年m月d日',$v['sendtime'])}</time>
+                </div>
+                {/foreach}
+            </div>
+            <div class="col-sm-4 footer_tag">
+                <div id="">
+                    <h4 class="_title">标签云</h4>
+                    {foreach name='_tag' item='v'}
+                    <a href="{:url('index/lists/index',['tag_id'=>$v['id']])}">{$v['name']}</a>
+                    {/foreach}
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h4 class="_title">友情链接</h4>
+                <div id="" class="_single">
+                    {foreach name='_link' item='v'}
+                    <p><a href="{$v['url']}" target="_blank">{$v['name']}</a></p>
+                    {/foreach}
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="footer_bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <a href="/">{$_websit['title']}</a>
+                |
+                <a href="/">{$_websit['copyright']}</a>
+                |
+                <a href="">{$_websit['email']}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

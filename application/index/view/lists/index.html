@@ -1,0 +1,50 @@
+{extend name='base'/}
+{block name='content'}
+<!--标签规定文档的主要内容main-->
+<main class="col-md-8">
+    <article>
+        <div class="_head category_title">
+            <h2>
+                {$headData['title']}：
+                <!--分类：-->
+                {$headData['tc']}
+            </h2>
+            <span>
+									共 {$headData['total']} 篇文章
+								</span>
+        </div>
+    </article>
+    {foreach name='data' item='v'}
+    <article>
+        <div class="_head">
+            <h1>{$v['title']}</h1>
+            <span>
+								作者：
+								{$v['author']}
+								</span>
+            •
+            <!--pubdate表⽰示发布⽇日期-->
+            <time pubdate="pubdate" datetime="{:date('20y年m月d日 H时i分',$v['sendtime'])}">{:date('20y年m月d日',$v['sendtime'])}</time>
+            •
+            分类：
+            <a href="{:url('index/lists/index',['cate_id'=>$v['category_id']])}">{$v['name']}</a>
+        </div>
+        <div class="_digest">
+            <img src="{$v['preview']}"  class="img-responsive"/>
+            <p>
+                {$v['abstract']}
+            </p>
+        </div>
+        <div class="_more">
+            <a href="{:url('index/content/index',['arc_id'=>$v['id']])}" class="btn btn-default">阅读全文</a>
+        </div>
+        <div class="_footer">
+            <i class="glyphicon glyphicon-tags"></i>
+            {foreach name="v['tags']" item='vo'}
+            <a href="{:url('index/lists/index',['tag_id'=>$vo['id']])}">{$vo['name']}</a>
+            {/foreach}
+        </div>
+    </article>
+    {/foreach}
+</main>
+{/block}

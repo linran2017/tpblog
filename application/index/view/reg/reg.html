@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="__STATIC__/admin/node_modules/hdjs/js/jquery.min.js"></script>
+    <title>技术博客--注册</title>
+</head>
+<body>
+<script>
+    $(function () {
+        $('.send').click(function () {
+            var email=$('.email').val();
+            if(email==''){
+                alert('邮箱不能为空');
+                return;
+            }
+            var reg = /^[0-9a-zA-Z-_]+@[0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2,3})?$/g;
+            if (!reg.test(email)) {
+                alert('邮箱格式不正确');
+                return;
+            }
+            $.ajax({
+                //请求地址，方式邮件的方法
+               url:"{:url('index/reg/sendcaptcha')}",
+                //请求内容
+                data:{email:email},
+                //内容格式
+                dataType:'json',
+                //请求方式
+                type:'post',
+                //请求成功后执行
+                success:function (response) {
+                    console.log(response);
+                }
+            })
+            var button=$(this);
+            //更改元素属性，禁用
+            button.attr('disabled',true);
+            button.css({'background':'#666666'});
+            button.css({'cursor':'not-allowed'});
+            //30秒后才可以再次发送验证码
+            var num=30;
+            //更改元素内容
+            button.html(num+'秒之后再发');
+            //设置定时器，每一秒钟num减1
+            var timer=setInterval(function () {
+                num--;
+                //如果30秒后过后
+                if(num<=0){
+                    //停止定时器
+                    clearInterval(timer);
+                    //这时可以发送验证码
+                    button.html('发送验证码');
+                    //删除禁用状态
+                    button.attr('disabled',false);
+                    button.css({'background':'#1CAF9A'});
+                    button.css({'cursor':'pointer'});
+                }else {
+                    //如果没有超过30秒，就继续等待
+                    button.html(num+'秒之后再发');
+                    button.css({'background':'#666'});
+                    button.css({'cursor':'not-allowed'});
+                }
+            },1000)
+        })
+
+    })
+</script>
+<style>
+    .box{
+        width: 420px;
+        height: 400px;
+        margin: 20px auto;
+    }
+    h1{
+        width: 420px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    p{
+        margin-top: 30px;
+        height: 45px;
+        width: 420px;
+    }
+    p span{
+        display: block;
+        float: left;
+        width: 80px;
+        height: 45px;
+        line-height: 45px;
+    }
+    p input{
+        display: block;
+        width: 330px;
+        height: 45px;
+        float: left;
+        border: #1CAF9A 1px solid;
+        background: white;
+        color: black;
+        font-size: 16px;
+    }
+    p .captcah{
+          display: block;
+          width: 210px;
+          height: 45px;
+          float: left;
+          border: #1CAF9A 1px solid;
+          background: white;
+          color: black;
+          font-size: 16px;
+      }
+    p .send{
+        display: block;
+        width: 100px;
+        height: 45px;
+        float: right;
+       background: #1CAF9A;
+        color: white;
+        font-size: 16px;
+        border: none;
+        text-align: center;
+        line-height: 45px;
+    }
+    p .send:hover{
+        background: black;
+        cursor: pointer;
+        color: white;
+    }
+    .sub{
+        height: 45px;
+        background: #1CAF9A;
+        display: block;
+        width: 400px;
+        line-height: 45px;
+        text-align: center;
+        color: white;
+        font-size: 20px;
+        border: none;
+    }
+    .sub:hover{
+        cursor: pointer;
+        background: black;
+    }
+    .my{
+        color: black;
+        font-size: 16px;
+        text-align: center;
+        color: #1CAF9A;
+    }
+    a{
+        text-decoration: none;
+        color: #1CAF9A;
+    }
+    a:hover{
+        cursor: pointer;
+        color: black;
+    }
+</style>
+<div class="box">
+    <h1>注册</h1>
+    <form action="" method="post">
+        <p>
+            <span>邮箱:</span>
+            <input class="email" name="name" type="text"/>
+        </p>
+        <p>
+            <span>密码：</span>
+            <input name="password" type="password"/>
+        </p>
+        <p>
+            <span>确认密码：</span>
+            <input name="confirm_password" type="password"/>
+        </p>
+        <p>
+            <span>验证码：</span>
+            <input class="captcah" name="captcha" type="text"/>
+            <a class="send">发送验证码</a>
+        </p>
+        <p>
+            <input class="sub" type="submit" value="注册" />
+        </p>
+        <p class="my">没有账号 <a href="{:url('index/login/login')}">去登录</a></p>
+    </form>
+</div>
+
+</body>
+</html>
+</html>

@@ -1,0 +1,136 @@
+{extend name='base'/}
+{block name='content'}
+<!--标签规定文档的主要内容main-->
+<main class="col-md-8">
+    <article>
+        <div class="_head">
+            <h1>{$contentData['title']}</h1>
+            <span>
+								作者：
+								<a href="">{$contentData['author']}</a>
+								</span>
+            •
+            <!--pubdate表⽰示发布⽇日期-->
+            <time pubdate="pubdate" datetime="{:date('20y年m月d日 H时i分',$contentData['sendtime'])}">{:date('20y年m月d日',$contentData['sendtime'])}</time>
+        </div>
+        <div class="_digest">
+            <p>{$contentData['content']}</p>
+        </div>
+        <div class="_footer">
+            <i class="glyphicon glyphicon-tags"></i>
+            {foreach name="contentData['tags']" item='v'}
+            <a href="{:url('index/lists/index',['tag_id'=>$v['id']])}">{$v['name']}</a>、
+            {/foreach}
+        </div>
+    </article>
+    <article class="say">
+        <h3 class="fabiao">发表评论</h3>
+       <div class="send">
+           <form action="" method="post">
+               <textarea name="content"></textarea>
+               <button>发表评论</button>
+           </form>
+       </div>
+        <h3 class="wangyou">网友评论</h3>
+        {if condition='$commentData'}
+        {foreach name='commentData' item='v'}
+        <div class="comment">
+            <span class="user">{$v['name']}:</span>
+            <p class="content">{$v['content']}</p>
+            <time class="time">{:date('20y-m-d H-i-s',$v['sendtime'])} </time>
+        </div>
+        {/foreach}
+        {else /}
+        <div class="comment">
+            <p class="content" style="text-align: center">暂无评论！</p>
+        </div>
+        {/if}
+
+    </article>
+    <style>
+        .say{
+            padding-top: 3px;
+        }
+        article .fabiao{
+            width: 100%;
+            display: block;
+            text-align: center;
+        }
+        article .send{
+            width: 100%;
+            height: 140px;
+            border: 1px #f5f5f5 solid;
+            box-shadow: #999 0px 1px 2px 0px;
+            position: relative;
+            margin-top: 2px;
+            margin-bottom: 10px;
+        }
+        article .send form textarea{
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid #333333;
+            display: block;
+            width: 100%;
+            height:100px;
+        }
+
+        article .send form button{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            display: block;
+            width: 100px;
+            height: 38px;
+            background: #1CAF9A;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            line-height: 38px;
+            border: 1px solid #ebebeb;
+        }
+        article .send form button:hover{
+            cursor: pointer;
+            background: #000;
+            color: white;
+        }
+        .wangyou{
+            width: 100%;
+            text-align: center;
+            padding-top: 5px;
+            display: block;
+        }
+        article .comment{
+            height: 100px;
+           border: 1px #f5f5f5 solid;
+            box-shadow: #999 0px 1px 2px 0px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        article .comment .user{
+            position: absolute;
+            top:2px;
+            left: 2px;
+            font-size: 14px;
+            color: #737373;
+        }
+        article .comment .content{
+            width: 80%;
+            position: absolute;
+            left: 50%;
+            top:50%;
+            transform: translate(-50%,-50%);
+            font-size: 16px;
+            color: black;
+            text-align: left;
+        }
+        article .comment .time{
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            font-size: 14px;
+            color: #737373;
+        }
+    </style>
+</main>
+{/block}

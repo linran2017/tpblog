@@ -1,0 +1,59 @@
+{extend name='base'/}
+{block name='content'}
+<style>
+    .nav-tabs li.active a{
+        border: 1px solid #428bca !important;
+        background-color: #428bca !important;
+        color: #ffffff;
+    }
+</style>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">网站配置</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{:url('index')}">列表</a></li>
+        </ul>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>配置名称</th>
+                <th>配置值</th>
+                <th>配置描述</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach name='data' item='v'}
+            <tr>
+                <td width="20%">{$v['id']}</td>
+                <td width="20%">{$v['name']}</td>
+                <td width="30%">
+                    <input type="text" class="form-control" value="{$v['value']}" onblur="change(this,{$v['id']})" />
+                </td>
+                <td>{$v['descript']}</td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <script>
+            function change(obj,id) {
+                var value=$(obj).val();
+                //alert(value);
+                //alert(id);
+                //异步请求
+                $.post("{:url('edit')}",{id:id,value:value},function (res) {
+                    if(res.code){
+                        //编辑成功
+                        util.message(res.msg,'refresh','success');
+                    }else{
+                        //编辑失败
+                        util.message(res.msg,'','error');
+                    }
+                },'json')
+            }
+        </script>
+    </div>
+</div>
+{/block}

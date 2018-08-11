@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>技术博客--登录</title>
+</head>
+<body>
+<style>
+    .box{
+        width: 420px;
+        height: 400px;
+        margin: 20px auto;
+    }
+    h1{
+        width: 420px;
+        text-align: center;
+        margin: 0 auto;
+    }
+    p{
+        margin-top: 30px;
+        height: 45px;
+        width: 420px;
+    }
+    p span{
+        display: block;
+        float: left;
+        width: 80px;
+        height: 45px;
+        line-height: 45px;
+    }
+    p input{
+        display: block;
+        width: 330px;
+        height: 45px;
+        float: right;
+        border: #1CAF9A 1px solid;
+        color: black;
+        font-size: 16px;
+    }
+.sub{
+    height: 45px;
+    background: #1CAF9A;
+    display: block;
+    width: 400px;
+    line-height: 45px;
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    border: none;
+}
+    .sub:hover{
+        cursor: pointer;
+        background: black;
+    }
+    .my{
+        color: black;
+        font-size: 16px;
+        text-align: center;
+        color: #1CAF9A;
+    }
+    a{
+        text-decoration: none;
+        color: #1CAF9A;
+    }
+    a:hover{
+        cursor: pointer;
+        color: black;
+    }
+</style>
+<div class="box">
+<h1>登录</h1>
+<form action="" method="post">
+    <p>
+        <span>邮箱:</span>
+        <input style="background-color: white" class="input" name="name" type="text"/>
+    </p>
+    <p>
+        <span>密码：</span>
+        <input class="input" type="password" name="password"/>
+    </p>
+    <p>
+        <input class="sub" type="submit" value="登录" />
+    </p>
+    <p class="my">没有账号 <a href="{:url('index/reg/reg')}">去注册</a></p>
+</form>
+</div>
+
+</body>
+</html>
